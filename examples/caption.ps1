@@ -12,3 +12,5 @@ foreach ($file in $files) {
         New-Item -ItemType file -Path $folder -Name "$($file.BaseName).txt" -Value $caption_text
     }
 }
+
+}
