@@ -1245,11 +1245,10 @@ def train_model(
 	config_toml_data["max_data_loader_n_workers"] = int(max_data_loader_n_workers)
 
 	# Sort the dictionary by keys
-	config_toml_data = dict(sorted(config_toml_data.items()))
-		current_datetime = datetime.now()
-	formatted_datetime = current_datetime.strftime("%Y%m%d-%H%M%S")
 	output_directory = "/Users/fukabooboo/kohya_ss/outputs/"
-	tmpfilename = os.path.join(output_directory, f"config_lora-{formatted_datetime}.toml")
+    current_datetime = datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y%m%d-%H%M%S")
+    tmpfilename = os.path.join(output_directory, f"config_lora-{formatted_datetime}.toml")
 
 	# Save the updated TOML data back to the file
 	with open(tmpfilename, "w", encoding="utf-8") as toml_file:
