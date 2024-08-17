@@ -1,1 +1,0 @@
-weapon, gun, solo, holding gun, holding, cyborg, male focus, upper body
