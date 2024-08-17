@@ -1252,8 +1252,12 @@ def train_model(
     tmpfilename = fr"{output_dir}/config_lora-{formatted_datetime}.toml"
 
     # Save the updated TOML data back to the file
+
+    output_directory = "/Users/fukabooboo/kohya_ss/outputs/"
+tmpfilename = os.path.join(output_directory, "config_lora-20240817-144739.toml")
+
     with open(tmpfilename, "w", encoding="utf-8") as toml_file:
-        toml.dump(config_toml_data, toml_file)
+    # ファイルに書き込み処理を行う
 
         if not os.path.exists(toml_file.name):
             log.error(f"Failed to write TOML file: {toml_file.name}")
