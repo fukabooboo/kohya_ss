@@ -1242,36 +1242,32 @@ def train_model(
         if value not in ["", False, None]
     }
 
-    config_toml_data["max_data_loader_n_workers"] = int(max_data_loader_n_workers)
+	config_toml_data["max_data_loader_n_workers"] = int(max_data_loader_n_workers)
 
-    # Sort the dictionary by keys
-    config_toml_data = dict(sorted(config_toml_data.items()))
+	# Sort the dictionary by keys
+	config_toml_data = dict(sorted(config_toml_data.items()))
+		current_datetime = datetime.now()
+	formatted_datetime = current_datetime.strftime("%Y%m%d-%H%M%S")
+	output_directory = "/Users/fukabooboo/kohya_ss/outputs/"
+	tmpfilename = os.path.join(output_directory, f"config_lora-{formatted_datetime}.toml")
 
-    current_datetime = datetime.now()
-    formatted_datetime = current_datetime.strftime("%Y%m%d-%H%M%S")
-    tmpfilename = fr"{output_dir}/config_lora-{formatted_datetime}.toml"
+	# Save the updated TOML data back to the file
+	with open(tmpfilename, "w", encoding="utf-8") as toml_file:
+    		# ファイルに書き込み処理を行う
+    		if not os.path.exists(toml_file.name):
+        	log.error(f"Failed to write TOML file: {toml_file.name}")
 
-    # Save the updated TOML data back to the file
+	run_cmd.append("--config_file")
+	run_cmd.append(rf"{tmpfilename}")
 
-    output_directory = "/Users/fukabooboo/kohya_ss/outputs/"
-tmpfilename = os.path.join(output_directory, "config_lora-20240817-144739.toml")
+	# Define a dictionary of parameters
+	run_cmd_params = {
+    		"additional_parameters": additional_parameters,
+	}
 
-    with open(tmpfilename, "w", encoding="utf-8") as toml_file:
-    # ファイルに書き込み処理を行う
+	# Use the ** syntax to unpack the dictionary when calling the function
+	run_cmd = run_cmd_advanced_training(run_cmd=run_cmd, **run_cmd_params)
 
-        if not os.path.exists(toml_file.name):
-            log.error(f"Failed to write TOML file: {toml_file.name}")
-
-    run_cmd.append("--config_file")
-    run_cmd.append(rf"{tmpfilename}")
-
-    # Define a dictionary of parameters
-    run_cmd_params = {
-        "additional_parameters": additional_parameters,
-    }
-
-    # Use the ** syntax to unpack the dictionary when calling the function
-    run_cmd = run_cmd_advanced_training(run_cmd=run_cmd, **run_cmd_params)
 
     if print_only:
         print_command_and_toml(run_cmd, tmpfilename)
